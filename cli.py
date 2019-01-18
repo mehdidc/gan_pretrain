@@ -49,6 +49,7 @@ def train(
     log_interval=1,
     device="cpu",
     batch_size=64,
+    mask_size=None,
     nz=100,
     parent_model=None,
     freeze_parent=True,
@@ -64,7 +65,7 @@ def train(
     except Exception:
         pass
     lr = 0.0002
-    dataset = load_dataset(dataset, split="train", image_size=image_size)
+    dataset = load_dataset(dataset, split="train", image_size=image_size, mask_size=mask_size)
     x0, _ = dataset[0]
     nc = x0.size(0)
     w = x0.size(1)

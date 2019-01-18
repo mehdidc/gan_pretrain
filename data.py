@@ -50,17 +50,29 @@ class H5Dataset:
     def __len__(self):
         return len(self.X)
 
+def random_mask(size):
+    
+    def f(img):
+        y = np.random.randint(0, img.size(1) - size + 1)
+        x = np.random.randint(0, img.size(2) - size + 1)
+        mask = torch.zeros(img.size())
+        mask[:, y:y+size, x:x+size] = 1
+        return img*mask
+    
+    return f
 
-def load_dataset(dataset_name, split="full", image_size=None):
+def load_dataset(dataset_name, split="full", image_size=None, mask_size=None):
     if image_size is None:
         image_size = 32
+    if mask_size is None:
+        mask_size = image_size
     image_size = int(image_size)
     if dataset_name == "mnist":
         dataset = dset.MNIST(
             root=data_path("mnist"),
             download=True,
             transform=transforms.Compose(
-                [transforms.Scale(image_size), transforms.ToTensor()]
+                [transforms.Scale(image_size), transforms.ToTensor(), random_mask(size=mask_size)]
             ),
         )
         return dataset
