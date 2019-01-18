@@ -44,7 +44,7 @@ def train(
     folder="out",
     dataset="mnist",
     image_size=None,
-    resume=False,
+    resume_folder=None,
     wasserstein=False,
     log_interval=1,
     device="cpu",
@@ -77,9 +77,9 @@ def train(
         dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers
     )
     act = "sigmoid" if nc == 1 else "tanh"
-    if resume:
-        gen = torch.load("{}/gen.th".format(folder))
-        discr = torch.load("{}/discr.th".format(folder))
+    if resume_folder:
+        gen = torch.load("{}/gen.th".format(resume_folder))
+        discr = torch.load("{}/discr.th".format(resume_folder))
     else:
         gen = Gen(
             latent_size=nz,
