@@ -65,6 +65,8 @@ def train(
     except Exception:
         pass
     lr = 0.0002
+    if mask_size:
+        mask_size = int(mask_size)
     dataset = load_dataset(dataset, split="train", image_size=image_size, mask_size=mask_size)
     x0, _ = dataset[0]
     nc = x0.size(0)
