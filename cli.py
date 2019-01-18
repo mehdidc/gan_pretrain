@@ -189,7 +189,7 @@ def train(
                 )
                 vutils.save_image(
                     f,
-                    "{}/fake_samples_epoch_{:03d}.png".format(folder, epoch),
+                    "{}/fake_samples_iter_{:03d}.png".format(folder, giter),
                     normalize=True,
                 )
                 vutils.save_image(
